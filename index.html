@@ -16,11 +16,6 @@
     </style>
   
     <script type="text/javascript">
-        function capitalise(string)
-        {
-            return string.charAt(0).toUpperCase() + string.slice(1);
-        }
-        
         function showProfs(title) {
             $('#issue').html(title);
             $('#profs').empty();
@@ -93,6 +88,7 @@
             
             for (var counter = 0; counter < data.length; counter++) {
                 var row = data[counter];
+
                 
                 var largest = row['Grootste probleem'];
                 if (largest == 'nvt') continue;
