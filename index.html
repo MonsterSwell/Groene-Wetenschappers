@@ -44,7 +44,6 @@
         $(document).ready(function() {
             
             $('#problem').change(function() {
-                
                 var val = $('#problem').val();
                 
                 if (val == 'Grootste probleem') {
@@ -57,6 +56,59 @@
                     $('#fig').empty();
                     render(underFrequency);
                 }
+            });
+            
+            var largestFrequency = {};
+            var overFrequency = {};
+            var underFrequency = {};
+
+            // TODO this one is empty right now
+            var totalFrequency = {};
+
+            var disciplines = [];
+            
+            $.getJSON('outcome-final.js', function(data) {
+                for (var counter = 0; counter < data.length; counter++) {
+                    var row = data[counter];
+
+                    var largest = row['Grootste probleem'];
+                    if (largest == 'nvt') continue;
+
+                    if (largest in largestFrequency)
+                        largestFrequency[largest] += 1;
+                    else
+                        largestFrequency[largest] = 1;
+
+                    var over = row['Overschat probleem'];
+                    if (over == 'nvt') continue;
+
+                    if (over in overFrequency)
+                        overFrequency[over] += 1;
+                    else
+                        overFrequency[over] = 1;
+
+                    var under = row['Onderschat probleem'];
+                    if (under == 'nvt') continue;
+
+                    if (under in underFrequency)
+                        underFrequency[under] += 1;
+                    else
+                        underFrequency[under] = 1;
+
+                    var discipline = row['Discipline'];
+
+                    if (disciplines.indexOf(discipline) < 0) {
+                        disciplines.push(discipline);
+                    }
+                }
+
+                disciplines.sort();
+
+                for (var dIndex in disciplines) {
+                    $('#disciplines').append('<option value="' + disciplines[dIndex] + '">' + disciplines[dIndex] + '</option>');
+                }
+                
+                render(largestFrequency);
             });
             
         });
@@ -82,54 +134,6 @@
     
     <div id="fig">
         <script type="text/javascript+protovis">
-            var largestFrequency = {};
-            var overFrequency = {};
-            var underFrequency = {};
-            
-            // TODO this one is empty right now
-            var totalFrequency = {};
-
-            var disciplines = [];
-            
-            for (var counter = 0; counter < data.length; counter++) {
-                var row = data[counter];
-                
-                var largest = row['Grootste probleem'];
-                if (largest == 'nvt') continue;
-                
-                if (largest in largestFrequency)
-                    largestFrequency[largest] += 1;
-                else
-                    largestFrequency[largest] = 1;
-                
-                var over = row['Overschat probleem'];
-                if (over == 'nvt') continue;
-                
-                if (over in overFrequency)
-                    overFrequency[over] += 1;
-                else
-                    overFrequency[over] = 1;
-                    
-                var under = row['Onderschat probleem'];
-                if (under == 'nvt') continue;
-                
-                if (under in underFrequency)
-                    underFrequency[under] += 1;
-                else
-                    underFrequency[under] = 1;
-                    
-                var discipline = row['Discipline'];
-                
-                if (disciplines.indexOf(discipline) < 0) {
-                    disciplines.push(discipline);
-                }
-            }
-            
-            disciplines.sort();
-
-            for (var dIndex in disciplines) {
-                $('#disciplines').append('<option value="' + disciplines[dIndex] + '">' + disciplines[dIndex] + '</option>');
-            }
             
             var classes;
             var vis;
@@ -168,8 +172,6 @@
                 
                 return vis;
             }
-            
-            render(largestFrequency);
         </script>
     </div>
     

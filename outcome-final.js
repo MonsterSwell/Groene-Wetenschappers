@@ -1,4 +1,4 @@
-var data = [
+[
     {
         "Discipline": "Bestuurskunde", 
         "Insitituut": "Tilburg", 
