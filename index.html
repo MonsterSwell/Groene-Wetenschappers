@@ -35,7 +35,7 @@
                 if (title == row[currentProblem]) {
                     names.push(row['Naam']);
                     
-                    $('#profs').append('<li>' + row['Naam'].split(', ')[1] + ' ' + row['Naam'].split(', ')[0] + '</li>');
+                    $('#profs').append('<li>' + row['Naam'].split(', ')[1] + ' ' + row['Naam'].split(', ')[0] + ', ' + row['Functie'] + '</li>');
                 }
             }
             
