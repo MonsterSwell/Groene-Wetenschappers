@@ -1,0 +1,183 @@
+<html>
+  <head>
+    <title>Scientist Bubbles</title>
+    
+    <script type="text/javascript" src="jquery-1.5.2.min.js"></script>
+    <script type="text/javascript" src="outcome-final.js"></script>
+    
+    <!--[if IE]>
+        <script type="text/javascript" src="protovis-3.2/svg.js" data-path="protovis-3.2/"></script>
+    <![endif]-->
+    
+    <script src="protovis-3.2/protovis-r3.3.js" type="text/javascript"></script>
+    
+    <style type="text/css">
+    
+    </style>
+  
+    <script type="text/javascript">
+        function capitalise(string)
+        {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+        
+        function showProfs(title) {
+            $('#issue').html(title);
+            $('#profs').empty();
+            
+            var names = [];
+            
+            var currentProblem = $('#problem').val();
+            
+            for (var counter in data) {
+                var row = data[counter];
+                
+                if (title == row[currentProblem]) {
+                    names.push(row['Naam']);
+                    
+                    $('#profs').append('<li>' + row['Naam'].split(', ')[1] + ' ' + row['Naam'].split(', ')[0] + '</li>');
+                }
+            }
+            
+        }
+        
+        $(document).ready(function() {
+            
+            $('#problem').change(function() {
+                
+                var val = $('#problem').val();
+                
+                if (val == 'Grootste probleem') {
+                    $('#fig').empty();
+                    render(largestFrequency);
+                } else if (val == 'Overschat probleem') {
+                    $('#fig').empty();
+                    render(overFrequency);
+                } else if (val == 'Onderschat probleem') {
+                    $('#fig').empty();
+                    render(underFrequency);
+                }
+            });
+            
+        });
+    
+    </script>
+  </head>
+
+<body>
+    
+    <div>
+        <label for="problem">Probleem:</label>
+        <select id="problem" name="problem">
+            <option value="Grootste probleem">Grootste probleem</option>
+            <option value="Overschat probleem">Overschatte probleem</option>
+            <option value="Onderschat probleem">Onderschatte probleem</option>
+        </select>
+    
+        <label for="disciplines">Disciplines:</label>
+        <select id="disciplines" name="disciplines">
+            <option value=""></option>
+        </select>
+    </div>
+    
+    <div id="fig">
+        <script type="text/javascript+protovis">
+            var largestFrequency = {};
+            var overFrequency = {};
+            var underFrequency = {};
+            
+            // TODO this one is empty right now
+            var totalFrequency = {};
+
+            var disciplines = [];
+            
+            for (var counter in data) {
+                var row = data[counter];
+                
+                var largest = row['Grootste probleem'];
+                if (largest == 'nvt') continue;
+                
+                if (largest in largestFrequency)
+                    largestFrequency[largest] += 1;
+                else
+                    largestFrequency[largest] = 1;
+                
+                var over = row['Overschat probleem'];
+                if (over == 'nvt') continue;
+                
+                if (over in overFrequency)
+                    overFrequency[over] += 1;
+                else
+                    overFrequency[over] = 1;
+                    
+                var under = row['Onderschat probleem'];
+                if (under == 'nvt') continue;
+                
+                if (under in underFrequency)
+                    underFrequency[under] += 1;
+                else
+                    underFrequency[under] = 1;
+                    
+                var discipline = row['Discipline'];
+                
+                if (disciplines.indexOf(discipline) < 0) {
+                    disciplines.push(discipline);
+                }
+            }
+            
+            disciplines.sort();
+
+            for (var dIndex in disciplines) {
+                $('#disciplines').append('<option value="' + disciplines[dIndex] + '">' + disciplines[dIndex] + '</option>');
+            }
+            
+            var classes;
+            var vis;
+            
+            function render(freqs) {
+                classes = pv.nodes(pv.flatten(freqs).key('issue').key('freq').array());
+                classes.slice(1).forEach(function(d) {
+                    d.nodeName = d.nodeValue.issue;
+                    d.nodeValue = d.nodeValue.freq;
+                });
+            
+                var format = pv.Format.number();
+            
+                vis = new pv.Panel()
+                    .canvas('fig')
+                    .width(570)
+                    .height(500);
+            
+                vis.add(pv.Layout.Pack)
+                    .nodes(classes)
+                    .size(function(d) d.nodeValue*10)
+                    .spacing(0)
+                    .order(null)
+                    .node.add(pv.Dot)
+                    //.fillStyle(pv.Colors.category20().by(function(d) d['issue']))
+                    //.strokeStyle(function() this.fillStyle().darker())
+                    // .visible(function(d) d.parentNode)
+                    .title(function(d) d.nodeName)
+                    .event("click", function() { showProfs(this.title()); })
+                    .anchor("center").add(pv.Label)
+                    .text(function(d) { if (d.nodeValue > 0) return d.nodeName; else return ""; })
+                    .font(function(d) { return (9 + d.nodeValue*1.5) + "px sans-serif" });
+                ;
+
+                vis.render();
+                
+                return vis;
+            }
+            
+            render(largestFrequency);
+        </script>
+    </div>
+    
+    <div id="selected">
+        <h2 id="issue"></h2>
+        <ul id="profs">
+        </ul>
+    </div>
+    
+</body>
+</html>
