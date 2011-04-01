@@ -83,7 +83,7 @@ var data = [
     {
         "Discipline": "Economie", 
         "Insitituut": "Groningen", 
-        "Naam": "Beugelsdijk, Sjoerd & Steven Brakman", 
+        "Naam": "Sjoerd Beugelsdijk, Steven Brakman en", 
         "Functie": "Hoogleraar International Business en Management", 
         "Overschat probleem": "Globalisering", 
         "Grootste probleem": "nvt", 
@@ -614,7 +614,7 @@ var data = [
     {
         "Discipline": "Sociologie", 
         "Insitituut": "VU", 
-        "Naam": "Stekelenburg, Jacqueline van en Bert Klandermans", 
+        "Naam": "Jacqueline Stekelenburg, Bert Klandermans en", 
         "Functie": "Post-Doc Sociologie", 
         "Overschat probleem": "Integratie", 
         "Grootste probleem": "Cohesie", 
