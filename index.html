@@ -986,7 +986,7 @@
                     .event("click", function() { showProfs(this.title()); })
                     .anchor("center").add(pv.Label)
                     .text(function(d) { if (d.nodeValue > 0) return d.nodeName; else return ""; })
-                    .font(function(d) { return (7 + d.nodeValue*1.5) + "px sans-serif" });
+                    .font(function(d) { return (($('#disciplines').val() ? 15 : 7) + d.nodeValue*1.5) + "px sans-serif" });
                 ;
 
                 vis.render();
