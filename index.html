@@ -839,8 +839,8 @@
     	}
 	
         function setHeight() {
-            // if (parent && parent.document.getElementById('bubble_chart'))
-            //     parent.document.getElementById('bubble_chart').height = document['body'].offsetHeight;
+            if (parent && parent.document.getElementById('bubble_chart'))
+                parent.document.getElementById('bubble_chart').height = document['body'].offsetHeight;
         }
     
         function showProfs(title) {
@@ -864,6 +864,7 @@
                 $('#profs').empty();
             }
             
+            setHeight();
         }
         
         var largestFrequency = {};
