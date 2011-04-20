@@ -693,6 +693,18 @@
     
     <style type="text/css">
     
+        BODY {
+            margin: 0;
+            
+            background-color: black;
+        }
+    
+        SELECT {
+            height: 4em;
+            font-family: sans-serif;
+            font-weight: bold;
+        }
+    
     </style>
   
     <script type="text/javascript">
@@ -706,6 +718,10 @@
     	        return -1;
     	    }
     	}
+    	
+        // function setHeight() {
+        //             parent.document.getElementById('bubble_chart').height = document['body'].offsetHeight;
+        //         }
     
         function showProfs(title) {
             if (title != "") {
@@ -742,6 +758,8 @@
         var disciplines = [];
         
         $(document).ready(function() {
+            // setHeight();
+            
             for (var counter = 0; counter < data.length; counter++) {
                 var row = data[counter];
 
