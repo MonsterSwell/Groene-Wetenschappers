@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>Scientist Bubbles</title>
+    <title>De Groene Amsterdammer &mdash; 77 wetenschappers</title>
     
     <script type="text/javascript" src="jquery-1.5.2.min.js"></script>
     
@@ -785,6 +785,22 @@
         });
     
     </script>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-15801508-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
   </head>
 
 <body>
@@ -814,11 +830,12 @@
                     d.nodeName = d.nodeValue.issue;
                     d.nodeValue = d.nodeValue.freq;
                 });
-            
+
                 var format = pv.Format.number();
             
                 vis = new pv.Panel()
                     .canvas('fig')
+		    .top(20)
                     .width(570)
                     .height(500);
             
@@ -830,7 +847,7 @@
                     .node.add(pv.Dot)
                     //.fillStyle(pv.Colors.category20().by(function(d) d['issue']))
                     //.strokeStyle(function() this.fillStyle().darker())
-                    // .visible(function(d) d.parentNode)
+                    .visible(function(d) d.parentNode)
                     .title(function(d) d.nodeName)
                     .event("click", function() { showProfs(this.title()); })
                     .anchor("center").add(pv.Label)
