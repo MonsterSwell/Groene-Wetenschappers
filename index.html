@@ -831,8 +831,8 @@
     	}
 	
         function setHeight() {
-            if (parent && parent.document.getElementById('bubble_chart'))
-                parent.document.getElementById('bubble_chart').height = document['body'].offsetHeight;
+            // if (parent && parent.document.getElementById('bubble_chart'))
+            //     parent.document.getElementById('bubble_chart').height = document['body'].offsetHeight;
         }
     
         function showProfs(title) {
@@ -840,17 +840,15 @@
                 $('#issue').html(title + ":");
                 $('#profs').empty();
             
-                var names = [];
-            
                 var currentProblem = $('#problem').val();
+                var currentDiscipline = $('#disciplines').val();
             
                 for (var counter in data) {
                     var row = data[counter];
                 
                     if (title == row[currentProblem]) {
-                        names.push(row['Naam']);
-                    
-                        $('#profs').append('<li><a target="_blank" href="' + row['URL'] + '">' + row['Naam'].split(', ')[1] + ' ' + row['Naam'].split(', ')[0] + ', ' + row['Functie'] + '</a></li>');
+                        if (currentDiscipline == "" || currentDiscipline == row['Discipline'])
+                            $('#profs').append('<li><a target="_blank" href="' + row['URL'] + '">' + row['Naam'].split(', ')[1] + ' ' + row['Naam'].split(', ')[0] + ', ' + row['Functie'] + '</a></li>');
                     }
                 }
             } else {
