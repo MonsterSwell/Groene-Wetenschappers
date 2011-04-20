@@ -838,9 +838,9 @@
     	    }
     	}
 	
-        function setHeight() {
-            if (parent && parent.document.getElementById('bubble_chart'))
-                parent.document.getElementById('bubble_chart').height = document['body'].offsetHeight;
+        function call_parent_resize() {
+            if (parent && parent.resize_iframe)
+                parent.resize_iframe();
         }
     
         function showProfs(title) {
@@ -864,7 +864,7 @@
                 $('#profs').empty();
             }
             
-            setHeight();
+            call_parent_resize();
         }
         
         var largestFrequency = {};
@@ -874,7 +874,7 @@
         var disciplines = [];
         
         $(document).ready(function() {
-            setHeight();
+            call_parent_resize();
             
             for (var counter = 0; counter < data.length; counter++) {
                 var row = data[counter];
