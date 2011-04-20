@@ -800,9 +800,17 @@
             list-style-type: none;
         }
         
-        #profs li:before { 
+        #profs LI:before { 
             content: "- ";
-        };
+        }
+        
+        #profs LI A {
+            color: white;
+        }
+        
+        #profs LI A:visited {
+            color: #ccc;
+        }
         
         CIRCLE {
             cursor: hand;
@@ -841,7 +849,7 @@
                     if (title == row[currentProblem]) {
                         names.push(row['Naam']);
                     
-                        $('#profs').append('<li>' + row['Naam'].split(', ')[1] + ' ' + row['Naam'].split(', ')[0] + ', ' + row['Functie'] + '</li>');
+                        $('#profs').append('<li><a target="_blank" href="' + row['URL'] + '">' + row['Naam'].split(', ')[1] + ' ' + row['Naam'].split(', ')[0] + ', ' + row['Functie'] + '</a></li>');
                     }
                 }
             } else {
