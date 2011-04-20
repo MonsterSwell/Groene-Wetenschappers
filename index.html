@@ -830,9 +830,10 @@
     	    }
     	}
 	
-        // function setHeight() {
-        //             parent.document.getElementById('bubble_chart').height = document['body'].offsetHeight;
-        //         }
+        function setHeight() {
+            if (parent && parent.document.getElementById('bubble_chart'))
+                parent.document.getElementById('bubble_chart').height = document['body'].offsetHeight;
+        }
     
         function showProfs(title) {
             if (title != "") {
@@ -866,7 +867,7 @@
         var disciplines = [];
         
         $(document).ready(function() {
-            // setHeight();
+            setHeight();
             
             for (var counter = 0; counter < data.length; counter++) {
                 var row = data[counter];
@@ -988,7 +989,6 @@
             }
             
             render("largest", largestFrequency);
-            
             
             
             $(document).ready(function() {
