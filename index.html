@@ -823,7 +823,7 @@
     </style>
   
     <script type="text/javascript">
-        if(!Array.indexOf){
+        if(!Array.indexOf) {
     	    Array.prototype.indexOf = function(obj){
     	        for(var i=0; i<this.length; i++){
     	            if(this[i]==obj){
@@ -833,7 +833,7 @@
     	        return -1;
     	    }
     	}
-    	
+	
         // function setHeight() {
         //             parent.document.getElementById('bubble_chart').height = document['body'].offsetHeight;
         //         }
@@ -993,10 +993,13 @@
             
             render("largest", largestFrequency);
             
+            
+            
             $(document).ready(function() {
                 $('#problem').change(function() {
                     var val = $('#problem').val();
 
+                    // Blank out list
                     showProfs("");
 
                     if (val == 'Grootste probleem') {
@@ -1008,6 +1011,41 @@
                     } else if (val == 'Onderschat probleem') {
                         $('#fig').empty();
                         render('under', underFrequency);
+                    }
+                    
+                    $('#disciplines').val('');
+                });
+                
+                $('#disciplines').change(function() {
+                    // Blank out list
+                    showProfs("");
+                    
+                    var problemCat = $('#problem').val();
+                    var discipline = $('#disciplines').val();
+                    var tempFrequency = {};
+                    
+                    for (var counter = 0; counter < data.length; counter++) {
+                        var row = data[counter];
+
+                        var problem = row[problemCat];
+                        if (problem == 'nvt') continue;
+                        if (row['Discipline'] != discipline) continue;
+
+                        if (problem in tempFrequency)
+                            tempFrequency[problem] += 1;
+                        else
+                            tempFrequency[problem] = 1;
+                    }
+                    
+                    if (problemCat == 'Grootste probleem') {
+                        $('#fig').empty();
+                        render('largest', tempFrequency);
+                    } else if (problemCat == 'Overschat probleem') {
+                        $('#fig').empty();
+                        render('over', tempFrequency);
+                    } else if (problemCat == 'Onderschat probleem') {
+                        $('#fig').empty();
+                        render('under', tempFrequency);
                     }
                 });
             });
