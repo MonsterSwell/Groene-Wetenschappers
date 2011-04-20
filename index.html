@@ -697,12 +697,17 @@
             margin: 0;
             
             background-color: black;
+            
+            font-family: sans-serif;
+        }
+        
+        LABEL {
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
         }
     
         SELECT {
-            height: 4em;
-            font-family: sans-serif;
-            font-weight: bold;
         }
     
     </style>
@@ -842,7 +847,7 @@
             var classes;
             var vis;
             
-            function render(freqs) {
+            function render(cat, freqs) {
                 classes = pv.nodes(pv.flatten(freqs).key('issue').key('freq').array());
                 classes.slice(1).forEach(function(d) {
                     d.nodeName = d.nodeValue.issue;
@@ -863,8 +868,8 @@
                     .spacing(0)
                     .order(null)
                     .node.add(pv.Dot)
-                    //.fillStyle(pv.Colors.category20().by(function(d) d['issue']))
-                    //.strokeStyle(function() this.fillStyle().darker())
+                    .fillStyle({"largest": "#f2122b", "over": "#00afe9", "under": "#d6de51"}[cat])
+                    .strokeStyle(null)
                     .visible(function(d) d.parentNode)
                     .title(function(d) d.nodeName)
                     .event("click", function() { showProfs(this.title()); })
@@ -878,7 +883,7 @@
                 return vis;
             }
             
-            render(largestFrequency);
+            render("largest", largestFrequency);
             
             $(document).ready(function() {
                 $('#problem').change(function() {
@@ -888,13 +893,13 @@
 
                     if (val == 'Grootste probleem') {
                         $('#fig').empty();
-                        render(largestFrequency);
+                        render('largest', largestFrequency);
                     } else if (val == 'Overschat probleem') {
                         $('#fig').empty();
-                        render(overFrequency);
+                        render('over', overFrequency);
                     } else if (val == 'Onderschat probleem') {
                         $('#fig').empty();
-                        render(underFrequency);
+                        render('under', underFrequency);
                     }
                 });
             });
