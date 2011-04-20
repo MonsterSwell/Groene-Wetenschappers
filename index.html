@@ -874,8 +874,6 @@
         var disciplines = [];
         
         $(document).ready(function() {
-            call_parent_resize();
-            
             for (var counter = 0; counter < data.length; counter++) {
                 var row = data[counter];
 
@@ -997,6 +995,8 @@
             
             render("largest", largestFrequency);
             
+            
+            call_parent_resize();
             
             $(document).ready(function() {
                 $('#problem').change(function() {
